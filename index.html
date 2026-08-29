@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FixIt — Digital Complaint and Issue Reporting System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ==================== NAVIGATION BAR ==================== -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">⚡</div>
+        <span>FixIt</span>
+        <span class="tag">System</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="index.html" class="nav-link active">Home</a>
+        <a href="#how-it-works" class="nav-link">How It Works</a>
+        <a href="#features" class="nav-link">Features</a>
+        <a href="#categories" class="nav-link">Categories</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Injected dynamically by js/main.js -->
+        <a href="login.html" class="btn btn-secondary btn-sm">Log In</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Register</a>
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+    </div>
+  </header>
+
+  <!-- ==================== HERO SECTION ==================== -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-content">
+        <span class="section-tag">Facility & Community Helpdesk</span>
+        <h1>Report Problems. <br><span class="gradient-text">Track Progress.</span> <br>Get Things Fixed.</h1>
+        <p class="subtitle">
+          FixIt is a modern digital issue management platform for colleges, hostels, offices, and apartments. Submit maintenance requests in seconds and monitor real-time resolution from start to finish.
+        </p>
+
+        <div class="hero-actions">
+          <a href="report.html" class="btn btn-primary btn-lg">📢 Report an Issue</a>
+          <a href="login.html" class="btn btn-secondary btn-lg">🔍 Track Your Complaint</a>
+        </div>
+
+        <div class="hero-trust">
+          <div class="hero-trust-item"><span class="check">✓</span> 100% Digital Workflow</div>
+          <div class="hero-trust-item"><span class="check">✓</span> Real-Time Status Updates</div>
+          <div class="hero-trust-item"><span class="check">✓</span> Zero Paperwork</div>
+        </div>
+      </div>
+
+      <!-- Interactive CSS Visual Representation -->
+      <div class="hero-visual">
+        <div class="preview-card">
+          <div class="preview-header">
+            <span class="preview-title">⚡ Live Campus Activity</span>
+            <span class="badge badge-resolved"><span class="badge-dot"></span>System Online</span>
+          </div>
+
+          <!-- Sample Mock Card 1 -->
+          <div class="preview-complaint-item">
+            <div class="preview-item-top">
+              <span class="preview-item-id">FIX-1001</span>
+              <span class="badge badge-progress"><span class="badge-dot"></span>In Progress</span>
+            </div>
+            <div class="preview-item-title">Wi-Fi connection drop on 3rd Floor</div>
+            <div class="preview-item-meta">
+              <span>📍 Library Hall C</span>
+              <span>⚡ High Priority</span>
+            </div>
+          </div>
+
+          <!-- Sample Mock Card 2 -->
+          <div class="preview-complaint-item">
+            <div class="preview-item-top">
+              <span class="preview-item-id">FIX-1002</span>
+              <span class="badge badge-resolved"><span class="badge-dot"></span>Resolved</span>
+            </div>
+            <div class="preview-item-title">Water faucet leakage replaced</div>
+            <div class="preview-item-meta">
+              <span>📍 Hostel Block B</span>
+              <span>⚡ Medium Priority</span>
+            </div>
+          </div>
+
+          <!-- Sample Mock Card 3 -->
+          <div class="preview-complaint-item">
+            <div class="preview-item-top">
+              <span class="preview-item-id">FIX-1003</span>
+              <span class="badge badge-pending"><span class="badge-dot"></span>Pending</span>
+            </div>
+            <div class="preview-item-title">Corridor lighting replacement</div>
+            <div class="preview-item-meta">
+              <span>📍 Academic Block A</span>
+              <span>⚡ High Priority</span>
+            </div>
+          </div>
+
+          <!-- Floating Accent Badge -->
+          <div class="float-badge">
+            <span>✨</span> 3-Step Instant Resolution
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== HOW IT WORKS ==================== -->
+  <section id="how-it-works" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Simple 3-Step Process</span>
+        <h2>How FixIt Works</h2>
+        <p>A transparent and streamlined process that keeps both users and facility administrators connected.</p>
+      </div>
+
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-number">1</div>
+          <h3>1. Report Problem</h3>
+          <p>Select the category, location, priority level, and describe the facility problem in our clean reporting form.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">2</div>
+          <h3>2. Track Progress</h3>
+          <p>Receive a unique tracking ID (e.g. <code>FIX-1001</code>) and monitor real-time updates as maintenance teams get assigned.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">3</div>
+          <h3>3. Get It Fixed</h3>
+          <p>Facility administrators mark the ticket as Resolved once repairs are inspected and completed successfully.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FEATURES SECTION ==================== -->
+  <section id="features" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Key Capabilities</span>
+        <h2>Designed for Speed & Simplicity</h2>
+        <p>Built with essential tools to resolve community issues faster without bureaucratic delays.</p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">📝</div>
+          <h3>Easy Reporting</h3>
+          <p>Intuitive forms with automatic unique complaint ID generation and instant validation.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">🔍</div>
+          <h3>Real-Time Tracking</h3>
+          <p>Visual status tracker guiding users seamlessly from Pending through In Progress to Resolved.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">⚡</div>
+          <h3>Quick Management</h3>
+          <p>Dedicated Admin Console for facility managers to inspect all issues, update status, and track metrics.</p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">📊</div>
+          <h3>Smart Filtering</h3>
+          <p>Instantly search and filter complaints by category, priority, status, location, and reporter name.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== COMMON ISSUE CATEGORIES ==================== -->
+  <section id="categories" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">Coverage</span>
+        <h2>Supported Issue Categories</h2>
+        <p>Report any facility or infrastructure difficulty with predefined categories.</p>
+      </div>
+
+      <div class="category-grid">
+        <div class="category-card">
+          <div class="cat-icon">💡</div>
+          <div class="cat-name">Electrical</div>
+        </div>
+        <div class="category-card">
+          <div class="cat-icon">🚰</div>
+          <div class="cat-name">Plumbing</div>
+        </div>
+        <div class="category-card">
+          <div class="cat-icon">📶</div>
+          <div class="cat-name">Internet / Wi-Fi</div>
+        </div>
+        <div class="category-card">
+          <div class="cat-icon">🧹</div>
+          <div class="cat-name">Cleaning</div>
+        </div>
+        <div class="category-card">
+          <div class="cat-icon">🔧</div>
+          <div class="cat-name">Maintenance</div>
+        </div>
+        <div class="category-card">
+          <div class="cat-icon">🪑</div>
+          <div class="cat-name">Furniture</div>
+        </div>
+      </div>
+
+      <!-- Call to Action Banner -->
+      <div class="cta-banner">
+        <h2>Ready to report a maintenance issue?</h2>
+        <p>Join FixIt today to submit your first service ticket or check status on existing issues.</p>
+        <a href="register.html" class="btn btn-primary btn-lg" style="background: #ffffff; color: var(--primary);">Get Started for Free</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="brand-logo">
+            <div class="logo-icon">⚡</div>
+            <span>FixIt</span>
+          </a>
+          <p>Digital Complaint & Issue Reporting System. Report it. Track it. Fix it.</p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Navigation</h4>
+          <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="login.html">Login</a>
+            <a href="register.html">Register</a>
+            <a href="report.html">Report Issue</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Roles</h4>
+          <div class="footer-links">
+            <a href="dashboard.html">User Dashboard</a>
+            <a href="complaints.html">My Complaints</a>
+            <a href="admin.html">Admin Console</a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>Academic Project</h4>
+          <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+            Built for the Web Development Module using HTML5, modern CSS3, vanilla JavaScript, and LocalStorage.
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>&copy; 2026 FixIt Complaint System. All rights reserved.</span>
+        <span>Made with Vanilla JavaScript & LocalStorage</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

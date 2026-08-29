@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Complaints — FixIt Complaint System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="dashboard.html" class="brand-logo">
+        <div class="logo-icon">⚡</div>
+        <span>FixIt</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="complaints.html" class="nav-link active">My Complaints</a>
+        <a href="report.html" class="nav-link">Report Issue</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Filled dynamically by main.js -->
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <div class="container">
+      <!-- Page Header -->
+      <div class="page-header">
+        <div class="page-title">
+          <h1>📋 My Submitted Complaints</h1>
+          <p>Search, filter, and track the progress of all your maintenance tickets.</p>
+        </div>
+        <div>
+          <a href="report.html" class="btn btn-primary">
+            <span>+</span> Report New Issue
+          </a>
+        </div>
+      </div>
+
+      <!-- Live Search & Filter Toolbar -->
+      <div class="filter-toolbar">
+        <!-- 1. Search by ID / Title / Location -->
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="filter-search" 
+            class="form-control" 
+            placeholder="Search by ID, title, location..." 
+            autocomplete="off"
+          >
+        </div>
+
+        <!-- 2. Category Filter -->
+        <div>
+          <select id="filter-category" class="form-control">
+            <option value="all">All Categories</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Internet/Wi-Fi">Internet/Wi-Fi</option>
+            <option value="Cleaning">Cleaning</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <!-- 3. Priority Filter -->
+        <div>
+          <select id="filter-priority" class="form-control">
+            <option value="all">All Priorities</option>
+            <option value="Low">Low Priority</option>
+            <option value="Medium">Medium Priority</option>
+            <option value="High">High Priority</option>
+          </select>
+        </div>
+
+        <!-- 4. Status Filter -->
+        <div>
+          <select id="filter-status" class="form-control">
+            <option value="all">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+          </select>
+        </div>
+
+        <!-- 5. Reset Filters Button -->
+        <div>
+          <button type="button" id="btn-reset-filters" class="btn btn-secondary btn-sm" title="Clear all filters">
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Result Counter Indicator -->
+      <div class="filter-results-info">
+        <span id="complaints-count-display">Showing 0 complaints</span>
+      </div>
+
+      <!-- Complaints Cards / Grid Container -->
+      <div id="my-complaints-container">
+        <!-- Dynamic content injected by js/complaints.js -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2026 FixIt Complaint System. All rights reserved.</span>
+        <span>Real-time LocalStorage Filtering</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/complaints.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initMyComplaintsPage();
+    });
+  </script>
+</body>
+</html>

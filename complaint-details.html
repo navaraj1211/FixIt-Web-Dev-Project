@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaint Details — FixIt System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="brand-logo">
+        <div class="logo-icon">⚡</div>
+        <span>FixIt</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="complaints.html" class="nav-link">My Complaints</a>
+        <a href="report.html" class="nav-link">Report Issue</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Filled dynamically by main.js -->
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <div class="container-narrow">
+      <!-- Dynamic Complaint Details & Visual Step Tracker Container -->
+      <div id="complaint-details-container">
+        <!-- Content injected dynamically by js/complaints.js -->
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2026 FixIt Complaint System. All rights reserved.</span>
+        <span>Visual Step Tracker Active</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/complaints.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initComplaintDetailsPage();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report an Issue — FixIt Complaint System</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="dashboard.html" class="brand-logo">
+        <div class="logo-icon">⚡</div>
+        <span>FixIt</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="dashboard.html" class="nav-link">Dashboard</a>
+        <a href="complaints.html" class="nav-link">My Complaints</a>
+        <a href="report.html" class="nav-link active">Report Issue</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Filled dynamically by main.js -->
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <div class="container-narrow">
+      <!-- Breadcrumb / Header -->
+      <div class="page-header">
+        <div class="page-title">
+          <h1>📢 Submit Maintenance Request</h1>
+          <p>Please fill in the details below. Our facilities staff will be notified immediately.</p>
+        </div>
+        <div>
+          <a href="dashboard.html" class="btn btn-secondary btn-sm">← Back to Dashboard</a>
+        </div>
+      </div>
+
+      <!-- Complaint Submission Form Card -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Issue Details</span>
+          <span style="font-size: 0.8rem; color: var(--text-muted);"><span class="required" style="color: #dc2626;">*</span> All fields are mandatory</span>
+        </div>
+
+        <div class="card-body">
+          <form id="report-complaint-form" novalidate>
+            <!-- Title -->
+            <div class="form-group">
+              <label for="complaint-title">Complaint Title <span class="required" style="color: #dc2626;">*</span></label>
+              <input 
+                type="text" 
+                id="complaint-title" 
+                class="form-control" 
+                placeholder="e.g. Broken classroom projector HDMI port" 
+                required
+              >
+              <div class="form-hint">Brief summary describing the problem.</div>
+            </div>
+
+            <!-- Form Row: Category & Priority -->
+            <div class="form-row">
+              <div class="form-group">
+                <label for="complaint-category">Issue Category <span class="required" style="color: #dc2626;">*</span></label>
+                <select id="complaint-category" class="form-control" required>
+                  <option value="" disabled selected>-- Select a Category --</option>
+                  <option value="Electrical">💡 Electrical (Lights, Fans, Sockets)</option>
+                  <option value="Plumbing">🚰 Plumbing (Taps, Pipes, Drains)</option>
+                  <option value="Internet/Wi-Fi">📶 Internet/Wi-Fi (Routers, Network)</option>
+                  <option value="Cleaning">🧹 Cleaning & Sanitation</option>
+                  <option value="Maintenance">🔧 Maintenance & Appliances (AC, Projectors)</option>
+                  <option value="Furniture">🪑 Furniture (Desks, Chairs, Doors)</option>
+                  <option value="Other">📦 Other Infrastructure Issue</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="complaint-priority">Urgency / Priority <span class="required" style="color: #dc2626;">*</span></label>
+                <select id="complaint-priority" class="form-control" required>
+                  <option value="" disabled selected>-- Select Priority --</option>
+                  <option value="Low">🟢 Low (Minor inconvenience)</option>
+                  <option value="Medium">🟡 Medium (Requires attention soon)</option>
+                  <option value="High">🔴 High (Urgent / Safety hazard)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Location -->
+            <div class="form-group">
+              <label for="complaint-location">Specific Location <span class="required" style="color: #dc2626;">*</span></label>
+              <input 
+                type="text" 
+                id="complaint-location" 
+                class="form-control" 
+                placeholder="e.g. Science Block, 3rd Floor, Room 304" 
+                required
+              >
+              <div class="form-hint">Building name, floor, room number, or landmark.</div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group">
+              <label for="complaint-description">Detailed Description <span class="required" style="color: #dc2626;">*</span></label>
+              <textarea 
+                id="complaint-description" 
+                class="form-control" 
+                placeholder="Please describe the issue in detail. Mention when it started and what is not working properly..." 
+                required
+              ></textarea>
+            </div>
+
+            <!-- Actions -->
+            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 1.5rem;">
+              <a href="dashboard.html" class="btn btn-secondary">Cancel</a>
+              <button type="submit" id="btn-submit-complaint" class="btn btn-primary btn-lg">
+                Submit Complaint →
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2026 FixIt Complaint System. All rights reserved.</span>
+        <span>Automatic ID generation enabled</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/complaints.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initReportPage();
+    });
+  </script>
+</body>
+</html>

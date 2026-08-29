@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — FixIt Management Console</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="admin.html" class="brand-logo">
+        <div class="logo-icon" style="background: linear-gradient(135deg, #dc2626, #f87171);">🛠️</div>
+        <span>FixIt</span>
+        <span class="tag" style="background: #fee2e2; color: #dc2626;">Admin Console</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="admin.html" class="nav-link active">Admin Dashboard</a>
+        <a href="index.html" class="nav-link">Landing Page</a>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Injected dynamically by js/main.js with Admin badge and Logout -->
+      </div>
+
+      <button class="nav-toggle" aria-label="Toggle navigation menu">☰</button>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main>
+    <div class="container">
+      <!-- Admin Header -->
+      <div class="page-header">
+        <div class="page-title">
+          <h1>Facility Admin Console</h1>
+          <p>Logged in as <strong id="admin-welcome-name" style="color: var(--text-main);">Administrator</strong>. Manage campus tickets, assign technician statuses, and track resolution metrics.</p>
+        </div>
+        <div>
+          <button id="btn-reset-demo-data" class="btn btn-secondary btn-sm" title="Restore sample complaints and accounts for testing">
+            🔄 Reset Demo Data
+          </button>
+        </div>
+      </div>
+
+      <!-- 5 Key Metric Tiles -->
+      <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));">
+        <div class="stat-card">
+          <div class="stat-icon icon-total">📁</div>
+          <div class="stat-info">
+            <div id="admin-stat-total" class="stat-value">0</div>
+            <div class="stat-label">Total Tickets</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-pending">⏳</div>
+          <div class="stat-info">
+            <div id="admin-stat-pending" class="stat-value">0</div>
+            <div class="stat-label">Pending Review</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-progress">🔄</div>
+          <div class="stat-info">
+            <div id="admin-stat-progress" class="stat-value">0</div>
+            <div class="stat-label">In Progress</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-resolved">✅</div>
+          <div class="stat-info">
+            <div id="admin-stat-resolved" class="stat-value">0</div>
+            <div class="stat-label">Resolved</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon icon-high">⚡</div>
+          <div class="stat-info">
+            <div id="admin-stat-high" class="stat-value">0</div>
+            <div class="stat-label">High Priority</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Category Breakdown Progress Card -->
+      <div class="card" style="margin-bottom: 2rem;">
+        <div class="card-header">
+          <span class="card-title">📊 Issue Distribution by Category</span>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Real-time System Aggregate</span>
+        </div>
+        <div class="card-body">
+          <div id="category-breakdown-container">
+            <!-- Dynamic visual bars injected by js/admin.js -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Search & Filter Controls -->
+      <div class="filter-toolbar">
+        <!-- 1. Search Query -->
+        <div class="search-input-wrapper">
+          <span class="search-icon">🔍</span>
+          <input 
+            type="text" 
+            id="admin-search" 
+            class="form-control" 
+            placeholder="Search by ID, title, location, user..." 
+            autocomplete="off"
+          >
+        </div>
+
+        <!-- 2. Category Filter -->
+        <div>
+          <select id="admin-filter-category" class="form-control">
+            <option value="all">All Categories</option>
+            <option value="Electrical">Electrical</option>
+            <option value="Plumbing">Plumbing</option>
+            <option value="Internet/Wi-Fi">Internet/Wi-Fi</option>
+            <option value="Cleaning">Cleaning</option>
+            <option value="Maintenance">Maintenance</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <!-- 3. Priority Filter -->
+        <div>
+          <select id="admin-filter-priority" class="form-control">
+            <option value="all">All Priorities</option>
+            <option value="Low">Low Priority</option>
+            <option value="Medium">Medium Priority</option>
+            <option value="High">High Priority</option>
+          </select>
+        </div>
+
+        <!-- 4. Status Filter -->
+        <div>
+          <select id="admin-filter-status" class="form-control">
+            <option value="all">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Resolved">Resolved</option>
+          </select>
+        </div>
+
+        <!-- 5. Reset -->
+        <div>
+          <button type="button" id="btn-admin-reset-filters" class="btn btn-secondary btn-sm" title="Clear all filters">
+            Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- Count display -->
+      <div class="filter-results-info">
+        <span id="admin-count-display">Showing 0 complaints</span>
+        <span style="font-size: 0.8rem; color: var(--text-muted);">💡 Tip: You can update status directly from the dropdown below</span>
+      </div>
+
+      <!-- All Complaints Management Table -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">All Facility Complaints</span>
+        </div>
+        <div class="card-body" style="padding: 0;">
+          <div id="admin-complaints-container">
+            <!-- Full management table injected by js/admin.js -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span>&copy; 2026 FixIt Complaint System. All rights reserved.</span>
+        <span>Admin Console &bull; Real-time LocalStorage Persistence</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/auth.js"></script>
+  <script src="js/complaints.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initAdminPage();
+    });
+  </script>
+</body>
+</html>
