@@ -41,11 +41,16 @@ function renderDashboard(currentUser) {
   const pending = myComplaints.filter(c => c.status === 'Pending').length;
   const inProgress = myComplaints.filter(c => c.status === 'In Progress').length;
   const resolved = myComplaints.filter(c => c.status === 'Resolved').length;
+  const closed = myComplaints.filter(c => c.status === 'Closed').length;
 
   setText('stat-total', total);
   setText('stat-pending', pending);
   setText('stat-progress', inProgress);
   setText('stat-resolved', resolved);
+  setText('stat-closed', closed);
+
+  // Render "Needs Your Confirmation" section for resolved complaints
+  renderResolvedAwaitingSection(myComplaints, currentUser);
 
   const emptyState = document.getElementById('dashboard-empty-state');
 
@@ -59,6 +64,51 @@ function renderDashboard(currentUser) {
 
   const recent = myComplaints.slice(0, 6);
   container.innerHTML = recent.map(complaintCardHTML).join('');
+
+  // Attach quick confirm handlers on resolved complaint cards
+  attachQuickConfirmHandlers(container, currentUser);
+}
+
+// Renders the "Needs Your Confirmation" section on the dashboard
+// showing resolved complaints that the user hasn't confirmed yet.
+function renderResolvedAwaitingSection(myComplaints, currentUser) {
+  const section = document.getElementById('resolved-awaiting-section');
+  const awaitingContainer = document.getElementById('resolved-awaiting-container');
+  if (!section || !awaitingContainer) return;
+
+  const resolvedComplaints = myComplaints.filter(c => c.status === 'Resolved');
+
+  if (resolvedComplaints.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+  awaitingContainer.innerHTML = resolvedComplaints.map(c => {
+    return `
+      <div class="complaint-card card-resolved-awaiting">
+        <div class="complaint-card-top">
+          <div>
+            <div class="complaint-id">${c.id}</div>
+            <div class="complaint-title">${escapeHTML(c.title)}</div>
+          </div>
+          <span class="resolved-awaiting-badge">⏳ Awaiting Confirmation</span>
+        </div>
+        <div class="complaint-meta">
+          <span>${escapeHTML(c.category)}</span>
+          <span class="badge ${priorityBadgeClass(c.priority)}" style="padding:0.2rem 0.55rem;">${c.priority}</span>
+          <span>📍 ${escapeHTML(c.location)}</span>
+        </div>
+        <div class="complaint-card-footer">
+          <button class="card-quick-confirm" data-id="${c.id}">✓ Confirm Solved</button>
+          <a href="complaint-details.html?id=${encodeURIComponent(c.id)}" class="btn btn-secondary btn-sm">View Details</a>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Attach quick confirm handlers
+  attachQuickConfirmHandlers(awaitingContainer, currentUser);
 }
 
 function setText(id, value) {
@@ -67,14 +117,23 @@ function setText(id, value) {
 }
 
 function complaintCardHTML(c) {
+  const isResolved = c.status === 'Resolved';
+  const isClosed = c.status === 'Closed';
+  const cardClass = isClosed ? 'complaint-card card-closed' : (isResolved ? 'complaint-card card-resolved-awaiting' : 'complaint-card');
+
+  const footerActions = isResolved
+    ? `<button class="card-quick-confirm" data-id="${c.id}">✓ Confirm Solved</button>
+       <a href="complaint-details.html?id=${encodeURIComponent(c.id)}" class="btn btn-secondary btn-sm">View Details</a>`
+    : `<a href="complaint-details.html?id=${encodeURIComponent(c.id)}" class="btn btn-secondary btn-sm">View Details</a>`;
+
   return `
-    <div class="complaint-card">
+    <div class="${cardClass}">
       <div class="complaint-card-top">
         <div>
           <div class="complaint-id">${c.id}</div>
           <div class="complaint-title">${escapeHTML(c.title)}</div>
         </div>
-        <span class="badge ${statusBadgeClass(c.status)}">${c.status}</span>
+        <span class="badge ${statusBadgeClass(c.status)}">${c.status === 'Closed' ? '✓ Closed' : c.status}</span>
       </div>
       <div class="complaint-meta">
         <span>${escapeHTML(c.category)}</span>
@@ -83,10 +142,28 @@ function complaintCardHTML(c) {
       </div>
       <div class="complaint-card-footer">
         <span class="complaint-date">${formatDate(c.date)}</span>
-        <a href="complaint-details.html?id=${encodeURIComponent(c.id)}" class="btn btn-secondary btn-sm">View Details</a>
+        ${footerActions}
       </div>
     </div>
   `;
+}
+
+// Attaches click handlers to all ".card-quick-confirm" buttons within a container.
+function attachQuickConfirmHandlers(container, currentUser) {
+  container.querySelectorAll('.card-quick-confirm').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const id = btn.getAttribute('data-id');
+      const ok = confirmResolution(id);
+      if (ok) {
+        showToast(`${id} confirmed as solved! Thank you for your feedback.`, 'success');
+        // Re-render dashboard
+        renderDashboard(currentUser);
+      } else {
+        showToast('Could not confirm resolution. Please try again.', 'error');
+      }
+    });
+  });
 }
 
 // Prevents raw HTML from user input breaking the layout.
@@ -107,11 +184,13 @@ function setupReportForm(currentUser) {
   const customGroup = document.getElementById('custom-category-group');
   const customInput = document.getElementById('custom-category');
 
-  categorySelect.addEventListener('change', () => {
-    const isOther = categorySelect.value === 'Other';
-    customGroup.style.display = isOther ? 'block' : 'none';
-    customInput.required = isOther;
-  });
+  if (categorySelect && customGroup && customInput) {
+    categorySelect.addEventListener('change', () => {
+      const isOther = categorySelect.value === 'Other';
+      customGroup.style.display = isOther ? 'block' : 'none';
+      customInput.required = isOther;
+    });
+  }
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -120,14 +199,14 @@ function setupReportForm(currentUser) {
     const location = document.getElementById('complaint-location').value.trim();
     const priority = document.getElementById('complaint-priority').value;
     const description = document.getElementById('complaint-description').value.trim();
-    const additionalInfo = document.getElementById('complaint-additional').value.trim();
+    const additionalInfo = (document.getElementById('complaint-additional')?.value || '').trim();
 
-    let category = categorySelect.value;
+    let category = categorySelect ? categorySelect.value : '';
     if (category === 'Other') {
-      category = customInput.value.trim();
+      category = customInput ? customInput.value.trim() : '';
       if (!category) {
         showToast('Please enter your custom issue category.', 'error');
-        customInput.focus();
+        customInput?.focus();
         return;
       }
     }
@@ -137,6 +216,9 @@ function setupReportForm(currentUser) {
       return;
     }
 
+    const userEmail = currentUser?.email || 'user@fixit.com';
+    const userName = currentUser?.name || 'Standard User';
+
     const complaint = addComplaint({
       title,
       category,
@@ -144,14 +226,14 @@ function setupReportForm(currentUser) {
       priority,
       description,
       additionalInfo,
-      submittedBy: currentUser.email,
-      submittedByName: currentUser.name
+      submittedBy: userEmail,
+      submittedByName: userName
     });
 
-    showToast(`Report submitted successfully! Your complaint ID is ${complaint.id}.`, 'success');
+    showToast(`Report submitted successfully! Ticket ID: ${complaint.id}`, 'success');
     setTimeout(() => {
-      window.location.href = 'dashboard.html';
-    }, 1200);
+      window.location.href = 'complaints.html';
+    }, 1000);
   });
 }
 
@@ -168,6 +250,11 @@ function renderMyReports(currentUser) {
   const statusFilter = document.getElementById('filter-status');
   const emptyState = document.getElementById('reports-empty-state');
   const noResultsState = document.getElementById('reports-no-results');
+
+  // Pre-select status filter from URL params (e.g. ?status=Resolved from quick action)
+  const params = new URLSearchParams(window.location.search);
+  const presetStatus = params.get('status');
+  if (presetStatus && statusFilter) statusFilter.value = presetStatus;
 
   const allMine = getComplaintsByUser(currentUser.email)
     .sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -195,6 +282,9 @@ function renderMyReports(currentUser) {
     }
     if (noResultsState) noResultsState.style.display = 'none';
     container.innerHTML = result.map(complaintCardHTML).join('');
+
+    // Attach quick confirm handlers on resolved complaints
+    attachQuickConfirmHandlers(container, currentUser);
   }
 
   [searchInput, categoryFilter, priorityFilter, statusFilter].forEach(el => {
@@ -244,9 +334,10 @@ function renderComplaintDetails() {
     backBtn.textContent = backLabel;
   }
 
+  // Admin status controls — only visible to admin and NOT for Closed complaints
   const adminStatusRow = document.getElementById('detail-admin-status-row');
   if (adminStatusRow) {
-    if (isAdmin) {
+    if (isAdmin && complaint.status !== 'Closed') {
       adminStatusRow.style.display = 'grid';
       const select = document.getElementById('detail-status-select');
       select.value = complaint.status;
@@ -255,10 +346,67 @@ function renderComplaintDetails() {
         if (ok) {
           showToast(`${complaint.id} updated to "${select.value}".`, 'success');
           renderStatusTracker(document.getElementById('detail-tracker'), select.value);
+          // Show/hide user resolution panel based on new status
+          handleResolutionPanelVisibility(complaint, select.value, isAdmin);
         }
       });
     } else {
       adminStatusRow.style.display = 'none';
+    }
+  }
+
+  // User resolution panel — shown to users when status is Resolved
+  const resolutionPanel = document.getElementById('user-resolution-panel');
+  const closedPanel = document.getElementById('closed-confirmation-panel');
+
+  if (!isAdmin && resolutionPanel) {
+    if (complaint.status === 'Resolved') {
+      resolutionPanel.style.display = 'block';
+      if (closedPanel) closedPanel.style.display = 'none';
+
+      // Confirm Solved button
+      document.getElementById('btn-confirm-solved').addEventListener('click', () => {
+        const ok = confirmResolution(complaint.id);
+        if (ok) {
+          showToast(`${complaint.id} confirmed as solved! Thank you for your feedback.`, 'success');
+          resolutionPanel.style.display = 'none';
+          if (closedPanel) {
+            closedPanel.style.display = 'block';
+          }
+          renderStatusTracker(document.getElementById('detail-tracker'), 'Closed');
+        } else {
+          showToast('Could not confirm resolution. Please try again.', 'error');
+        }
+      });
+
+      // Reopen Issue button — shows a modal
+      document.getElementById('btn-reopen-issue').addEventListener('click', () => {
+        showReopenModal(complaint.id, () => {
+          // On successful reopen, refresh the page
+          window.location.reload();
+        });
+      });
+    } else if (complaint.status === 'Closed') {
+      resolutionPanel.style.display = 'none';
+      if (closedPanel) {
+        closedPanel.style.display = 'block';
+        const closedDateText = document.getElementById('closed-date-text');
+        if (closedDateText && complaint.closedDate) {
+          closedDateText.textContent = `Confirmed as solved on ${formatDate(complaint.closedDate)}`;
+        }
+      }
+    } else {
+      resolutionPanel.style.display = 'none';
+      if (closedPanel) closedPanel.style.display = 'none';
+    }
+  }
+
+  // For admin viewing closed complaints, show the closed info panel
+  if (isAdmin && closedPanel && complaint.status === 'Closed') {
+    closedPanel.style.display = 'block';
+    const closedDateText = document.getElementById('closed-date-text');
+    if (closedDateText && complaint.closedDate) {
+      closedDateText.textContent = `Confirmed as solved by user on ${formatDate(complaint.closedDate)}`;
     }
   }
 
@@ -276,10 +424,67 @@ function renderComplaintDetails() {
   renderStatusTracker(document.getElementById('detail-tracker'), complaint.status);
 }
 
-// Renders the Pending -> In Progress -> Resolved visual tracker.
+// Helper to show/hide resolution panel dynamically when admin changes status
+function handleResolutionPanelVisibility(complaint, newStatus, isAdmin) {
+  const resolutionPanel = document.getElementById('user-resolution-panel');
+  const closedPanel = document.getElementById('closed-confirmation-panel');
+  if (isAdmin) {
+    // Admin doesn't see user resolution buttons
+    if (resolutionPanel) resolutionPanel.style.display = 'none';
+    if (closedPanel) closedPanel.style.display = newStatus === 'Closed' ? 'block' : 'none';
+  }
+}
+
+// Shows a modal dialog for the user to enter a reason for reopening.
+function showReopenModal(complaintId, onSuccess) {
+  // Create modal overlay
+  const overlay = document.createElement('div');
+  overlay.className = 'reopen-modal-overlay';
+  overlay.innerHTML = `
+    <div class="reopen-modal">
+      <h3>↻ Reopen This Issue</h3>
+      <p>The issue hasn't been fixed properly? Let us know what's still wrong so the admin can reassign it.</p>
+      <textarea id="reopen-reason" placeholder="Describe why the problem is still not resolved (e.g., 'The light was replaced but flickered again the next day')"></textarea>
+      <div class="reopen-modal-actions">
+        <button class="btn btn-secondary" id="reopen-cancel">Cancel</button>
+        <button class="btn-reopen-issue" id="reopen-submit" style="border: none; background: var(--warning); color: white; padding: 0.65rem 1.25rem; border-radius: var(--radius-md); font-weight: 700; cursor: pointer;">Reopen Issue</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(overlay);
+
+  // Close on overlay click (outside modal)
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) overlay.remove();
+  });
+
+  // Cancel button
+  document.getElementById('reopen-cancel').addEventListener('click', () => overlay.remove());
+
+  // Submit reopen
+  document.getElementById('reopen-submit').addEventListener('click', () => {
+    const reason = document.getElementById('reopen-reason').value.trim();
+    if (!reason) {
+      showToast('Please provide a reason for reopening.', 'error');
+      return;
+    }
+
+    const ok = reopenComplaint(complaintId, reason);
+    if (ok) {
+      showToast(`${complaintId} has been reopened. The admin will review it again.`, 'info');
+      overlay.remove();
+      if (onSuccess) onSuccess();
+    } else {
+      showToast('Could not reopen. Please try again.', 'error');
+    }
+  });
+}
+
+// Renders the Pending -> In Progress -> Resolved -> Closed visual tracker.
 function renderStatusTracker(container, status) {
   if (!container) return;
-  const steps = ['Pending', 'In Progress', 'Resolved'];
+  const steps = ['Pending', 'In Progress', 'Resolved', 'Closed'];
   const currentIndex = steps.indexOf(status);
 
   container.innerHTML = steps.map((step, i) => {
@@ -287,11 +492,12 @@ function renderStatusTracker(container, status) {
     if (i < currentIndex) stateClass = 'done';
     else if (i === currentIndex) stateClass = 'active';
     const icon = i < currentIndex ? '✓' : (i + 1);
+    const label = step === 'Closed' ? '✓ Solved' : step;
     return `
       <div class="tracker-step ${stateClass}">
         <div class="tracker-line"></div>
         <div class="tracker-dot">${icon}</div>
-        <div class="tracker-label">${step}</div>
+        <div class="tracker-label">${label}</div>
       </div>`;
   }).join('');
 }

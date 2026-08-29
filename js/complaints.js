@@ -25,7 +25,58 @@ const LAST_ID_KEY = 'fixit_lastComplaintId';
 
 function getComplaints() {
   const raw = localStorage.getItem(COMPLAINTS_KEY);
-  return raw ? JSON.parse(raw) : [];
+  if (!raw) {
+    seedInitialComplaints();
+    const seeded = localStorage.getItem(COMPLAINTS_KEY);
+    return seeded ? JSON.parse(seeded) : [];
+  }
+  return JSON.parse(raw);
+}
+
+function seedInitialComplaints() {
+  const initial = [
+    {
+      id: 'FIX-1001',
+      title: 'Flickering fluorescent light in Room 302',
+      category: 'Electrical',
+      location: 'Block A, 3rd Floor, Room 302',
+      priority: 'Medium',
+      description: 'The tube light above row 2 keeps flickering continuously making it hard to study.',
+      additionalInfo: 'Please repair during break time',
+      submittedBy: 'user@fixit.com',
+      submittedByName: 'Standard User',
+      date: new Date(Date.now() - 3600000 * 48).toISOString(),
+      status: 'Pending'
+    },
+    {
+      id: 'FIX-1002',
+      title: 'Water tap leaking in 2nd floor restroom',
+      category: 'Plumbing',
+      location: 'Main Building, 2nd Floor Restroom',
+      priority: 'High',
+      description: 'Sink tap cannot be closed properly and water is continuously dripping onto the floor.',
+      additionalInfo: 'Water puddle forming near entrance',
+      submittedBy: 'user@fixit.com',
+      submittedByName: 'Standard User',
+      date: new Date(Date.now() - 3600000 * 24).toISOString(),
+      status: 'In Progress'
+    },
+    {
+      id: 'FIX-1003',
+      title: 'Library Wi-Fi router reboot required',
+      category: 'Internet / Wi-Fi',
+      location: 'Central Library, Reading Zone B',
+      priority: 'High',
+      description: 'Wi-Fi connection drops every 5 minutes in the silent study zone.',
+      additionalInfo: 'Technician already replaced access point',
+      submittedBy: 'user@fixit.com',
+      submittedByName: 'Standard User',
+      date: new Date(Date.now() - 3600000 * 12).toISOString(),
+      status: 'Resolved'
+    }
+  ];
+  localStorage.setItem(COMPLAINTS_KEY, JSON.stringify(initial));
+  localStorage.setItem(LAST_ID_KEY, '1003');
 }
 
 function saveComplaints(complaints) {
@@ -85,6 +136,36 @@ function updateComplaintStatus(id, newStatus) {
   return true;
 }
 
+// Called by the user to confirm that a resolved issue is truly fixed.
+// Moves status from "Resolved" to "Closed" and records the confirmation.
+function confirmResolution(id) {
+  const complaints = getComplaints();
+  const index = complaints.findIndex(c => c.id === id);
+  if (index === -1) return false;
+  if (complaints[index].status !== 'Resolved') return false;
+
+  complaints[index].status = 'Closed';
+  complaints[index].closedDate = new Date().toISOString();
+  complaints[index].closedByUser = true;
+  saveComplaints(complaints);
+  return true;
+}
+
+// Called by the user when a "Resolved" complaint isn't actually fixed.
+// Moves status back to "In Progress" and records the reason.
+function reopenComplaint(id, reason) {
+  const complaints = getComplaints();
+  const index = complaints.findIndex(c => c.id === id);
+  if (index === -1) return false;
+  if (complaints[index].status !== 'Resolved') return false;
+
+  complaints[index].status = 'In Progress';
+  complaints[index].reopenReason = reason || 'Issue not fully resolved.';
+  complaints[index].reopenDate = new Date().toISOString();
+  saveComplaints(complaints);
+  return true;
+}
+
 // Filters a list of complaints by a free-text search term across
 // ID, title, and location (and, for admins, the submitter's name).
 function searchComplaints(list, term) {
@@ -113,6 +194,7 @@ function statusBadgeClass(status) {
   if (status === 'Pending') return 'badge-pending';
   if (status === 'In Progress') return 'badge-in-progress';
   if (status === 'Resolved') return 'badge-resolved';
+  if (status === 'Closed') return 'badge-closed';
   return '';
 }
 

@@ -11,12 +11,14 @@
 
   <header class="navbar">
     <div class="container nav-container">
-      <a href="index.html" class="logo">
+      <a href="dashboard.html" class="logo">
         <div class="logo-icon">⚡</div>
         <span>FixIt</span>
       </a>
       <ul class="nav-links">
-        <li><a href="#" id="detail-back-link" class="nav-link active">Back</a></li>
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="complaints.html" class="nav-link">My Reports</a></li>
+        <li><a href="#" id="detail-back-link" class="btn btn-secondary btn-sm">← Back</a></li>
         <li><a href="#" class="btn btn-outline btn-sm btn-logout">Logout</a></li>
       </ul>
     </div>
@@ -70,6 +72,27 @@
             </select>
           </div>
         </div>
+      </div>
+
+      <!-- User Resolution Actions (shown when status is Resolved and viewer is the user) -->
+      <div id="user-resolution-panel" class="resolution-actions" style="display: none;">
+        <h3>✅ This issue has been marked as Resolved</h3>
+        <p>Has the problem actually been fixed? Confirm resolution or reopen if it's still an issue.</p>
+        <div class="resolution-btn-group">
+          <button id="btn-confirm-solved" class="btn-confirm-solved">
+            ✓ Confirm Problem Solved
+          </button>
+          <button id="btn-reopen-issue" class="btn-reopen-issue">
+            ↻ Reopen Issue
+          </button>
+        </div>
+      </div>
+
+      <!-- Closed confirmation message (shown when status is Closed) -->
+      <div id="closed-confirmation-panel" style="display: none; text-align: center; padding: 1.5rem; background: linear-gradient(135deg, #f0fdf4, #ecfdf5); border: 2px solid #a7f3d0; border-radius: var(--radius-lg); margin-top: 1.5rem;">
+        <div style="font-size: 2.2rem; margin-bottom: 0.5rem;">🎉</div>
+        <h3 style="color: #065f46; margin-bottom: 0.3rem;">Problem Confirmed as Solved</h3>
+        <p style="color: #047857; font-size: 0.9rem;" id="closed-date-text">This issue was confirmed resolved by the user.</p>
       </div>
     </div>
   </main>

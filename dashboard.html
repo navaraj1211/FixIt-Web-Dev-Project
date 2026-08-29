@@ -72,6 +72,48 @@
           <div class="stat-label">Resolved</div>
         </div>
       </div>
+
+      <div class="stat-card">
+        <div class="stat-icon green" style="background: #ecfdf5;">🎉</div>
+        <div class="stat-content">
+          <div class="stat-value" id="stat-closed">0</div>
+          <div class="stat-label">Confirmed Solved</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Quick Actions Panel -->
+    <section class="quick-actions-panel">
+      <a href="report.html" class="quick-action-card">
+        <div class="quick-action-icon" style="background: var(--primary-light); color: var(--primary);">📝</div>
+        <div>
+          <h4>Report Problem</h4>
+          <p>Submit a new issue</p>
+        </div>
+      </a>
+      <a href="complaints.html" class="quick-action-card">
+        <div class="quick-action-icon" style="background: var(--warning-light); color: var(--warning);">📋</div>
+        <div>
+          <h4>My Reports</h4>
+          <p>View all submitted issues</p>
+        </div>
+      </a>
+      <a href="complaints.html?status=Resolved" class="quick-action-card">
+        <div class="quick-action-icon" style="background: #f0fdf4; color: #16a34a;">✅</div>
+        <div>
+          <h4>Awaiting Confirmation</h4>
+          <p>Resolved issues to review</p>
+        </div>
+      </a>
+    </section>
+
+    <!-- Resolved Issues Awaiting Confirmation -->
+    <section id="resolved-awaiting-section" class="resolved-section-banner" style="display: none;">
+      <div class="section-header">
+        <h2 class="section-title">✅ Needs Your Confirmation</h2>
+      </div>
+      <p style="margin-bottom: 1rem; font-size: 0.9rem; color: #047857;">These issues have been marked as resolved by the admin. Please confirm if the problem is actually fixed.</p>
+      <div id="resolved-awaiting-container" class="complaints-grid"></div>
     </section>
 
     <!-- Recent Complaints Section -->

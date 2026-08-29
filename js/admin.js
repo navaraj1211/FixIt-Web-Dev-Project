@@ -30,6 +30,7 @@ function renderAdminDashboard() {
   setText('admin-stat-progress', all.filter(c => c.status === 'In Progress').length);
   setText('admin-stat-resolved', all.filter(c => c.status === 'Resolved').length);
   setText('admin-stat-high', all.filter(c => c.priority === 'High').length);
+  setText('admin-stat-closed', all.filter(c => c.status === 'Closed').length);
 
   const emptyState = document.getElementById('admin-recent-empty');
   const tableWrap = document.getElementById('admin-recent-table-wrap');
@@ -105,15 +106,23 @@ function renderAdminComplaintsTable() {
 
 // Builds one <tr> for a complaint. showStatusControl toggles whether a
 // live status dropdown is shown (management page) or a static badge
-// (dashboard "recent" preview).
+// (dashboard "recent" preview). Closed status is always read-only since
+// only users can close complaints.
 function adminRowHTML(c, showStatusControl) {
-  const statusCell = showStatusControl
-    ? `<select class="status-select" data-complaint-id="${c.id}">
+  let statusCell;
+
+  if (c.status === 'Closed') {
+    // Closed is always a read-only badge — only users can close
+    statusCell = `<span class="badge badge-closed">✓ Closed</span>`;
+  } else if (showStatusControl) {
+    statusCell = `<select class="status-select" data-complaint-id="${c.id}">
         <option value="Pending" ${c.status === 'Pending' ? 'selected' : ''}>Pending</option>
         <option value="In Progress" ${c.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
         <option value="Resolved" ${c.status === 'Resolved' ? 'selected' : ''}>Resolved</option>
-      </select>`
-    : `<span class="badge ${statusBadgeClass(c.status)}">${c.status}</span>`;
+      </select>`;
+  } else {
+    statusCell = `<span class="badge ${statusBadgeClass(c.status)}">${c.status}</span>`;
+  }
 
   return `
     <tr>

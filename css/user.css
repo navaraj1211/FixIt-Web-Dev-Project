@@ -185,3 +185,274 @@
   .user-header-banner { flex-direction: column; align-items: flex-start; }
   .detail-row { grid-template-columns: 1fr; }
 }
+
+/* ---------- Resolution Action Panel (user complaint details) ---------- */
+.resolution-actions {
+  background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 100%);
+  border: 2px solid #86efac;
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin: 1.5rem 0;
+  text-align: center;
+  animation: fadeSlideUp 0.4s ease;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.resolution-actions h3 {
+  font-size: 1.15rem;
+  color: #065f46;
+  margin-bottom: 0.4rem;
+}
+
+.resolution-actions p {
+  color: #047857;
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.resolution-btn-group {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.btn-confirm-solved {
+  background: linear-gradient(135deg, #16a34a, #059669);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 14px rgba(22, 163, 74, 0.3);
+}
+
+.btn-confirm-solved:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+}
+
+.btn-reopen-issue {
+  background: white;
+  color: var(--warning);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.95rem;
+  border: 2px solid var(--warning);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+
+.btn-reopen-issue:hover {
+  background: var(--warning-light);
+  transform: translateY(-2px);
+}
+
+/* ---------- Closed state complaint card overlay ---------- */
+.complaint-card.card-closed {
+  border-color: #a7f3d0;
+  background: linear-gradient(135deg, #ffffff 0%, #f0fdf4 100%);
+  position: relative;
+}
+
+.complaint-card.card-closed::after {
+  content: '✓ Confirmed';
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: #047857;
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-full);
+}
+
+/* ---------- Resolved-awaiting (admin resolved, user hasn't confirmed) ---------- */
+.complaint-card.card-resolved-awaiting {
+  border-color: #86efac;
+  border-width: 2px;
+}
+
+.resolved-awaiting-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: linear-gradient(135deg, #16a34a, #059669);
+  color: white;
+  padding: 0.3rem 0.7rem;
+  border-radius: var(--radius-full);
+  font-size: 0.72rem;
+  font-weight: 700;
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+/* ---------- Quick confirm button on complaint cards ---------- */
+.card-quick-confirm {
+  background: linear-gradient(135deg, #16a34a, #059669);
+  color: white;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-md);
+  font-size: 0.78rem;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.card-quick-confirm:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(22, 163, 74, 0.3);
+}
+
+/* ---------- Reopen modal ---------- */
+.reopen-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.5);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.reopen-modal {
+  background: var(--bg-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+  max-width: 460px;
+  width: 90%;
+  padding: 2rem;
+  animation: modalSlide 0.25s ease;
+}
+
+@keyframes modalSlide {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.reopen-modal h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.reopen-modal p {
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.reopen-modal textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-family: inherit;
+  font-size: 0.9rem;
+  resize: vertical;
+  margin-bottom: 1rem;
+}
+
+.reopen-modal textarea:focus {
+  outline: none;
+  border-color: var(--warning);
+  box-shadow: 0 0 0 3px var(--warning-light);
+}
+
+.reopen-modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+/* ---------- Quick Actions Panel ---------- */
+.quick-actions-panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.quick-action-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: var(--text-main);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.quick-action-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+
+.quick-action-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.quick-action-card h4 {
+  font-size: 0.92rem;
+  margin-bottom: 0.1rem;
+}
+
+.quick-action-card p {
+  font-size: 0.78rem;
+}
+
+/* ---------- Resolved Awaiting Section ---------- */
+.resolved-section-banner {
+  background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+  border: 1px solid #86efac;
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.resolved-section-banner .section-header {
+  margin-bottom: 1rem;
+}
+
+.resolved-section-banner .section-title {
+  color: #065f46;
+  font-size: 1.15rem;
+}

@@ -24,13 +24,24 @@
           <label class="form-label" for="admin-password">Password</label>
           <input type="password" id="admin-password" class="form-control" placeholder="Enter admin password" required>
         </div>
-        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1.5rem;">
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1.5rem; background: #6366f1;">
           Log In to Admin Console
         </button>
       </form>
 
+      <!-- Admin Demo Credentials -->
+      <div style="margin-top: 1.25rem; padding: 0.85rem; background: rgba(99, 102, 241, 0.12); border-radius: var(--radius-md); border: 1px solid rgba(99, 102, 241, 0.3); font-size: 0.82rem; text-align: left;">
+        <div style="font-weight: 700; color: #a5b4fc; margin-bottom: 0.25rem;">🔒 Predefined Admin Account:</div>
+        <div style="color: #cbd5e1;">Email: <code>admin@fixit.com</code></div>
+        <div style="color: #cbd5e1;">Password: <code>Admin@123</code></div>
+        <button type="button" id="fill-admin-demo" class="btn btn-secondary btn-sm" style="margin-top: 0.5rem; width: 100%; font-size: 0.78rem; padding: 0.35rem; background: #1e293b; color: #cbd5e1; border-color: #334155;">Auto-Fill Admin Login</button>
+      </div>
+
       <div style="margin-top: 1.75rem; text-align: center; font-size: 0.85rem;">
-        <a href="index.html" style="color: #94a3b8;">← Back to FixIt Home</a>
+        <a href="login.html" style="color: #94a3b8;">Are you a resident/user? Go to User Login →</a>
+      </div>
+      <div style="margin-top: 0.5rem; text-align: center; font-size: 0.85rem;">
+        <a href="index.html" style="color: #64748b;">← Back to FixIt Home</a>
       </div>
     </div>
   </div>
@@ -38,6 +49,11 @@
   <script src="js/main.js"></script>
   <script src="js/auth.js"></script>
   <script>
+    document.getElementById('fill-admin-demo')?.addEventListener('click', () => {
+      document.getElementById('admin-email').value = 'admin@fixit.com';
+      document.getElementById('admin-password').value = 'Admin@123';
+    });
+
     document.getElementById('admin-login-form').addEventListener('submit', (e) => {
       e.preventDefault();
       const email = document.getElementById('admin-email').value;

@@ -249,6 +249,7 @@ textarea.form-control { min-height: 140px; resize: vertical; }
 .badge-pending { background: var(--warning-light); color: var(--warning); }
 .badge-in-progress { background: var(--primary-light); color: var(--primary); }
 .badge-resolved { background: var(--success-light); color: var(--success); }
+.badge-closed { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
 
 .badge-low { background: var(--success-light); color: var(--success); }
 .badge-medium { background: var(--warning-light); color: var(--warning); }

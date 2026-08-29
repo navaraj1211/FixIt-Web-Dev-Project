@@ -23,17 +23,36 @@ const CURRENT_USER_KEY = 'fixit_currentUser';
 // ---------------------------------------------------------
 const ADMIN_EMAIL = 'admin@fixit.com';
 const ADMIN_PASSWORD = 'Admin@123';
+const DEMO_USER_EMAIL = 'user@fixit.com';
+const DEMO_USER_PASSWORD = 'User@123';
 
 function seedAdminAccount() {
   const users = getUsers();
-  const adminExists = users.some(u => u.email.toLowerCase() === ADMIN_EMAIL);
+  let changed = false;
+
+  const adminExists = users.some(u => u.email.toLowerCase() === ADMIN_EMAIL.toLowerCase());
   if (!adminExists) {
     users.push({
-      name: 'FixIt Admin',
+      name: 'System Admin',
       email: ADMIN_EMAIL,
       password: ADMIN_PASSWORD,
       role: 'admin'
     });
+    changed = true;
+  }
+
+  const userExists = users.some(u => u.email.toLowerCase() === DEMO_USER_EMAIL.toLowerCase());
+  if (!userExists) {
+    users.push({
+      name: 'Standard User',
+      email: DEMO_USER_EMAIL,
+      password: DEMO_USER_PASSWORD,
+      role: 'user'
+    });
+    changed = true;
+  }
+
+  if (changed) {
     localStorage.setItem(USERS_KEY, JSON.stringify(users));
   }
 }
