@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FixIt — Digital Complaint & Issue Reporting System</title>
+  <meta name="description" content="FixIt makes it easier to report everyday problems, follow their progress, and help keep your community running smoothly.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/user.css">
+  <style>
+    /* Landing Hero & Features Custom Modern SaaS Styling */
+    .hero-section {
+      padding: 5rem 0 4rem 0;
+      text-align: center;
+      background: radial-gradient(circle at 50% 20%, rgba(37, 99, 235, 0.08) 0%, rgba(248, 250, 252, 0) 70%);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background-color: var(--primary-light);
+      color: var(--primary);
+      padding: 0.4rem 1rem;
+      border-radius: var(--radius-full);
+      font-size: 0.875rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      border: 1px solid var(--primary-border);
+    }
+
+    .hero-title {
+      font-size: 3.25rem;
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -1px;
+      max-width: 800px;
+      margin: 0 auto 1.25rem auto;
+      color: var(--text-main);
+    }
+
+    .hero-title span {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: var(--text-muted);
+      max-width: 640px;
+      margin: 0 auto 2.25rem auto;
+      line-height: 1.6;
+    }
+
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .features-section, .categories-section, .steps-section {
+      padding: 4.5rem 0;
+    }
+
+    .section-intro {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 3rem auto;
+    }
+
+    .section-intro h2 {
+      font-size: 2.1rem;
+      margin-bottom: 0.75rem;
+      letter-spacing: -0.5px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .grid-5 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .feature-card {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2rem;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: #cbd5e1;
+    }
+
+    .feature-icon-box {
+      width: 52px;
+      height: 52px;
+      border-radius: var(--radius-md);
+      background-color: var(--primary-light);
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .category-chip {
+      background-color: var(--bg-surface);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+
+    .category-chip:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: var(--shadow-md);
+    }
+
+    .category-chip .cat-icon {
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .category-chip h4 {
+      font-size: 1rem;
+    }
+
+    .custom-issue-banner {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: white;
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      text-align: center;
+      margin-top: 2.5rem;
+    }
+
+    .custom-issue-banner h3 {
+      color: white;
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .custom-issue-banner p {
+      color: #94a3b8;
+      max-width: 500px;
+      margin: 0 auto 1.25rem auto;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.35rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        <span>FixIt</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html" class="nav-link active">Home</a></li>
+        <li><a href="#how-it-works" class="nav-link">How It Works</a></li>
+        <li><a href="#categories" class="nav-link">Common Issues</a></li>
+        <li><a href="login.html" class="btn btn-secondary btn-sm">Log In</a></li>
+        <li><a href="register.html" class="btn btn-primary btn-sm">Create Account</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main>
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-badge">🚀 Digital Issue Resolution Platform</div>
+        <h1 class="hero-title">Report Problems. Track Progress. <span>Get Things Fixed.</span></h1>
+        <p class="hero-subtitle">FixIt makes it easier to report everyday problems, follow their progress, and help keep your community, campus, or facility running smoothly.</p>
+        
+        <div class="hero-buttons">
+          <a href="register.html" class="btn btn-primary" style="padding: 0.9rem 1.8rem; font-size: 1.05rem;">
+            <span>+ Report a Problem</span>
+          </a>
+          <a href="login.html" class="btn btn-secondary" style="padding: 0.9rem 1.8rem; font-size: 1.05rem;">
+            <span>Track My Report →</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- How FixIt Works Section -->
+    <section id="how-it-works" class="steps-section" style="background-color: var(--bg-surface); border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color);">
+      <div class="container">
+        <div class="section-intro">
+          <h2>How FixIt Works</h2>
+          <p>A transparent and efficient 3-step workflow designed to resolve issues faster than ever.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="feature-card">
+            <div class="feature-icon-box">1</div>
+            <h3>1. Submit Report</h3>
+            <p>Describe the issue, pinpoint the location, choose or enter a category, and submit your complaint in seconds.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box">2</div>
+            <h3>2. Live Tracking</h3>
+            <p>Receive an automatic unique ID (e.g. FIX-1001) and follow your report through Pending, In Progress, and Resolved stages.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box">3</div>
+            <h3>3. Quick Resolution</h3>
+            <p>Facility administrators review tickets, assign technicians, update statuses, and restore operations seamlessly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Why FixIt Section -->
+    <section class="features-section">
+      <div class="container">
+        <div class="section-intro">
+          <h2>Why Choose FixIt?</h2>
+          <p>Everything you need for seamless complaint management and accountability.</p>
+        </div>
+
+        <div class="grid-3">
+          <div class="feature-card">
+            <div class="feature-icon-box">⚡</div>
+            <h3>Easy Reporting</h3>
+            <p>User-friendly interface with streamlined fields and custom category support for any unlisted problem.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box">📊</div>
+            <h3>Organized Complaints</h3>
+            <p>Filter by priority, category, or status with instant real-time client-side search.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-icon-box">🎯</div>
+            <h3>Centralized Management</h3>
+            <p>Dedicated executive administrative controls with immediate status updates and complete metric dashboards.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Common Issues & Categories Section -->
+    <section id="categories" class="categories-section" style="background-color: var(--bg-surface); border-top: 1px solid var(--border-color);">
+      <div class="container">
+        <div class="section-intro">
+          <h2>Common Issues We Handle</h2>
+          <p>From classroom lights to Wi-Fi outages, FixIt handles all daily facility complaints.</p>
+        </div>
+
+        <div class="grid-5">
+          <div class="category-chip">
+            <span class="cat-icon">💡</span>
+            <h4>Electrical</h4>
+            <p style="font-size: 0.8rem; margin-top: 0.2rem;">Lighting, switches, sockets</p>
+          </div>
+          <div class="category-chip">
+            <span class="cat-icon">🚰</span>
+            <h4>Plumbing</h4>
+            <p style="font-size: 0.8rem; margin-top: 0.2rem;">Leaks, taps, drainage</p>
+          </div>
+          <div class="category-chip">
+            <span class="cat-icon">📶</span>
+            <h4>Internet / Wi-Fi</h4>
+            <p style="font-size: 0.8rem; margin-top: 0.2rem;">Router, connectivity issues</p>
+          </div>
+          <div class="category-chip">
+            <span class="cat-icon">🧹</span>
+            <h4>Cleaning</h4>
+            <p style="font-size: 0.8rem; margin-top: 0.2rem;">Sanitation, garbage removal</p>
+          </div>
+          <div class="category-chip">
+            <span class="cat-icon">🛠️</span>
+            <h4>Maintenance</h4>
+            <p style="font-size: 0.8rem; margin-top: 0.2rem;">AC, doors, windows, paint</p>
+          </div>
+        </div>
+
+        <div class="custom-issue-banner">
+          <h3>Something else? You can add your own issue category!</h3>
+          <p>Our intelligent reporting system lets you specify any unique problem under the "Other" option.</p>
+          <a href="register.html" class="btn btn-primary btn-sm">Get Started Today →</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>
+        <strong>FixIt System</strong> — Digital Complaint and Issue Reporting System
+      </div>
+      <div>
+        <a href="login.html" style="margin-right: 1.25rem; color: var(--text-muted);">User Login</a>
+        <a href="admin-login.html" style="color: var(--text-muted);">Admin Portal</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

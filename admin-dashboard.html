@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard — FixIt</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <div class="admin-shell">
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+      <a href="admin-dashboard.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        <span>FixIt Admin</span>
+      </a>
+      <ul class="admin-nav">
+        <li><a href="admin-dashboard.html" class="admin-nav-link active">📊 Dashboard</a></li>
+        <li><a href="admin-complaints.html" class="admin-nav-link">📋 All Complaints</a></li>
+        <li><a href="admin-complaints.html?status=Pending" class="admin-nav-link">⏳ Pending</a></li>
+        <li><a href="admin-complaints.html?status=In%20Progress" class="admin-nav-link">⚙️ In Progress</a></li>
+        <li><a href="admin-complaints.html?status=Resolved" class="admin-nav-link">✓ Resolved</a></li>
+      </ul>
+      <div class="admin-sidebar-footer">
+        <div style="font-size: 0.85rem; margin-bottom: 0.75rem; color: #94a3b8;">
+          Signed in as<br><strong class="current-admin-name" style="color: white;">Admin</strong>
+        </div>
+        <a href="#" class="btn btn-outline btn-sm btn-logout btn-block" style="color: #cbd5e1; border-color: #334155;">Logout</a>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div>
+          <button class="admin-toggle">☰</button>
+          <h1>Admin Dashboard</h1>
+          <p>Overview of all complaints submitted across FixIt.</p>
+        </div>
+        <a href="admin-complaints.html" class="btn btn-primary btn-sm">View All Complaints →</a>
+      </div>
+
+      <section class="admin-stats-grid">
+        <div class="admin-stat-card">
+          <div class="stat-value" id="admin-stat-total">0</div>
+          <div class="stat-label">Total Complaints</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="stat-value" id="admin-stat-pending">0</div>
+          <div class="stat-label">Pending</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="stat-value" id="admin-stat-progress">0</div>
+          <div class="stat-label">In Progress</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="stat-value" id="admin-stat-resolved">0</div>
+          <div class="stat-label">Resolved</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="stat-value" id="admin-stat-high">0</div>
+          <div class="stat-label">High Priority</div>
+        </div>
+      </section>
+
+      <div class="section-header">
+        <h2 class="section-title">Recent Complaints</h2>
+      </div>
+
+      <div id="admin-recent-empty" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">📋</div>
+        <h3>No complaints yet</h3>
+        <p>Submitted reports from all users will appear here.</p>
+      </div>
+
+      <div id="admin-recent-table-wrap" class="table-card">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Problem</th><th>Category</th><th>Priority</th>
+                <th>User</th><th>Location</th><th>Date</th><th>Status</th><th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-recent-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/complaints.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

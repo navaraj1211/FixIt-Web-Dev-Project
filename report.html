@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report a Problem — FixIt</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/user.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="dashboard.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        <span>FixIt</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="report.html" class="nav-link active">Report Problem</a></li>
+        <li><a href="complaints.html" class="nav-link">My Reports</a></li>
+        <li><a href="profile.html" class="nav-link">Profile</a></li>
+        <li><a href="#" class="btn btn-outline btn-sm btn-logout">Logout</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <!-- Report Form Container -->
+  <main class="container">
+    <div class="form-card">
+      <div class="form-header">
+        <h2>Report a Problem</h2>
+        <p>Fill out the details below to notify facility maintenance and receive a tracking ticket.</p>
+      </div>
+
+      <form id="report-problem-form">
+        <!-- Problem Title -->
+        <div class="form-group">
+          <label class="form-label" for="complaint-title">Problem Title <span style="color: #ef4444;">*</span></label>
+          <input type="text" id="complaint-title" class="form-control" placeholder="e.g. Broken light in classroom, Water leakage" required>
+          <div class="form-hint">Brief summary of the issue.</div>
+        </div>
+
+        <!-- Category Dropdown -->
+        <div class="form-group">
+          <label class="form-label" for="complaint-category">Issue Category <span style="color: #ef4444;">*</span></label>
+          <select id="complaint-category" class="form-control" required>
+            <option value="" disabled selected>Select category...</option>
+            <option value="Electrical">💡 Electrical (Lights, sockets, wiring)</option>
+            <option value="Plumbing">🚰 Plumbing (Leaks, taps, drainage)</option>
+            <option value="Internet / Wi-Fi">📶 Internet / Wi-Fi (Connectivity, router)</option>
+            <option value="Cleaning">🧹 Cleaning (Trash, sanitation, spill)</option>
+            <option value="Furniture">🪑 Furniture (Broken chairs, desks, doors)</option>
+            <option value="Maintenance">🛠️ Maintenance (AC, window, paint)</option>
+            <option value="Safety">🚨 Safety (Hazard, fire equipment, locks)</option>
+            <option value="Other">➕ Other / Add Additional Issue</option>
+          </select>
+        </div>
+
+        <!-- Custom Category Input (Shows only when 'Other' is selected) -->
+        <div class="form-group" id="custom-category-group" style="display: none; background-color: var(--primary-light); padding: 1rem; border-radius: var(--radius-md); border: 1px solid var(--primary-border);">
+          <label class="form-label" for="custom-category" style="color: var(--primary);">Enter Issue Category <span style="color: #ef4444;">*</span></label>
+          <input type="text" id="custom-category" class="form-control" placeholder="e.g. Laboratory Equipment, Heating, Cafeteria Oven">
+          <div class="form-hint">Define a specific custom category for this report.</div>
+        </div>
+
+        <!-- Location -->
+        <div class="form-group">
+          <label class="form-label" for="complaint-location">Location / Area <span style="color: #ef4444;">*</span></label>
+          <input type="text" id="complaint-location" class="form-control" placeholder="e.g. Block A Room 203, Library 2nd Floor, Cafeteria" required>
+        </div>
+
+        <!-- Priority Selection -->
+        <div class="form-group">
+          <label class="form-label" for="complaint-priority">Priority Level <span style="color: #ef4444;">*</span></label>
+          <select id="complaint-priority" class="form-control" required>
+            <option value="Low">Low — Minor issue (Can be resolved within a week)</option>
+            <option value="Medium" selected>Medium — Needs attention (Affects normal convenience)</option>
+            <option value="High">High — Urgent problem (Safety risk, active flood, outage)</option>
+          </select>
+        </div>
+
+        <!-- Description -->
+        <div class="form-group">
+          <label class="form-label" for="complaint-description">Describe the Problem <span style="color: #ef4444;">*</span></label>
+          <textarea id="complaint-description" class="form-control" placeholder="Please describe the problem in detail and any useful observations..." required></textarea>
+        </div>
+
+        <!-- Optional Additional Information -->
+        <div class="form-group">
+          <label class="form-label" for="complaint-additional">
+            Additional Information <span style="color: var(--text-muted); font-weight: normal;">(Optional)</span>
+          </label>
+          <input type="text" id="complaint-additional" class="form-control" placeholder="e.g. Best contact time, exact desk number, or emergency note">
+          <div class="form-hint">Any extra context that could assist the maintenance staff.</div>
+        </div>
+
+        <!-- Actions -->
+        <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+          <button type="submit" class="btn btn-primary" style="flex: 2;">
+            Submit Report
+          </button>
+          <a href="dashboard.html" class="btn btn-secondary" style="flex: 1;">
+            Cancel
+          </a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>FixIt — Complaint & Issue Reporting System</div>
+      <div>Logged in as: <strong class="current-user-name">User</strong></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/complaints.js"></script>
+  <script src="js/user.js"></script>
+</body>
+</html>

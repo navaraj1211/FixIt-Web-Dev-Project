@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Complaints — FixIt Admin</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+  <div class="admin-shell">
+    <aside class="admin-sidebar">
+      <a href="admin-dashboard.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        <span>FixIt Admin</span>
+      </a>
+      <ul class="admin-nav">
+        <li><a href="admin-dashboard.html" class="admin-nav-link">📊 Dashboard</a></li>
+        <li><a href="admin-complaints.html" class="admin-nav-link active">📋 All Complaints</a></li>
+        <li><a href="admin-complaints.html?status=Pending" class="admin-nav-link">⏳ Pending</a></li>
+        <li><a href="admin-complaints.html?status=In%20Progress" class="admin-nav-link">⚙️ In Progress</a></li>
+        <li><a href="admin-complaints.html?status=Resolved" class="admin-nav-link">✓ Resolved</a></li>
+      </ul>
+      <div class="admin-sidebar-footer">
+        <div style="font-size: 0.85rem; margin-bottom: 0.75rem; color: #94a3b8;">
+          Signed in as<br><strong class="current-admin-name" style="color: white;">Admin</strong>
+        </div>
+        <a href="#" class="btn btn-outline btn-sm btn-logout btn-block" style="color: #cbd5e1; border-color: #334155;">Logout</a>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div>
+          <button class="admin-toggle">☰</button>
+          <h1>All Complaints</h1>
+          <p>Search, filter, and update the status of any submitted report.</p>
+        </div>
+      </div>
+
+      <div class="filters-bar">
+        <input type="text" id="admin-search-input" class="form-control" placeholder="Search by ID, title, user, or location...">
+        <select id="admin-filter-category" class="form-control">
+          <option value="">All Categories</option>
+          <option value="Electrical">Electrical</option>
+          <option value="Plumbing">Plumbing</option>
+          <option value="Internet / Wi-Fi">Internet / Wi-Fi</option>
+          <option value="Cleaning">Cleaning</option>
+          <option value="Furniture">Furniture</option>
+          <option value="Maintenance">Maintenance</option>
+          <option value="Safety">Safety</option>
+        </select>
+        <select id="admin-filter-priority" class="form-control">
+          <option value="">All Priorities</option>
+          <option value="Low">Low</option>
+          <option value="Medium">Medium</option>
+          <option value="High">High</option>
+        </select>
+        <select id="admin-filter-status" class="form-control">
+          <option value="">All Statuses</option>
+          <option value="Pending">Pending</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Resolved">Resolved</option>
+        </select>
+      </div>
+
+      <div id="admin-no-results" class="empty-state" style="display: none;">
+        <div class="empty-state-icon">🔍</div>
+        <h3>No matching reports found</h3>
+        <p>Try changing your search or filters.</p>
+      </div>
+
+      <div id="admin-complaints-table-wrap" class="table-card">
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th><th>Problem</th><th>Category</th><th>Priority</th>
+                <th>User</th><th>Location</th><th>Date</th><th>Status</th><th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="admin-complaints-table-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/complaints.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>

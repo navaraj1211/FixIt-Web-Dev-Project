@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Reports — FixIt</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/user.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="dashboard.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        <span>FixIt</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+        <li><a href="report.html" class="nav-link">Report Problem</a></li>
+        <li><a href="complaints.html" class="nav-link active">My Reports</a></li>
+        <li><a href="profile.html" class="nav-link">Profile</a></li>
+        <li><a href="#" class="btn btn-outline btn-sm btn-logout">Logout</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container" style="padding-top: 2rem; padding-bottom: 3rem;">
+    <div class="section-header">
+      <h2 class="section-title">My Reports</h2>
+      <a href="report.html" class="btn btn-primary btn-sm">+ Report a Problem</a>
+    </div>
+
+    <!-- Search + Filters -->
+    <div class="filters-bar">
+      <input type="text" id="search-input" class="form-control" placeholder="Search by ID, title, or location...">
+      <select id="filter-category" class="form-control">
+        <option value="">All Categories</option>
+        <option value="Electrical">Electrical</option>
+        <option value="Plumbing">Plumbing</option>
+        <option value="Internet / Wi-Fi">Internet / Wi-Fi</option>
+        <option value="Cleaning">Cleaning</option>
+        <option value="Furniture">Furniture</option>
+        <option value="Maintenance">Maintenance</option>
+        <option value="Safety">Safety</option>
+      </select>
+      <select id="filter-priority" class="form-control">
+        <option value="">All Priorities</option>
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+      <select id="filter-status" class="form-control">
+        <option value="">All Statuses</option>
+        <option value="Pending">Pending</option>
+        <option value="In Progress">In Progress</option>
+        <option value="Resolved">Resolved</option>
+      </select>
+    </div>
+
+    <!-- No reports at all -->
+    <div id="reports-empty-state" class="empty-state" style="display: none;">
+      <div class="empty-state-icon">📋</div>
+      <h3>No reports yet</h3>
+      <p>Your submitted issues will appear here.</p>
+      <a href="report.html" class="btn btn-primary">Report a Problem</a>
+    </div>
+
+    <!-- Search/filter produced nothing -->
+    <div id="reports-no-results" class="empty-state" style="display: none;">
+      <div class="empty-state-icon">🔍</div>
+      <h3>No matching reports found</h3>
+      <p>Try changing your search or filters.</p>
+    </div>
+
+    <div id="my-reports-container" class="complaints-grid"></div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>FixIt — Complaint & Issue Reporting System</div>
+      <div>Logged in as: <strong class="current-user-name">User</strong></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/complaints.js"></script>
+  <script src="js/user.js"></script>
+</body>
+</html>

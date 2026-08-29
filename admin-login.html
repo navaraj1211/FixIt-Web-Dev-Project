@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Portal — FixIt</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+
+  <div class="admin-auth-page">
+    <div class="admin-auth-card">
+      <div class="admin-auth-badge">🔒 Admin Portal</div>
+      <h2>Administrator Sign In</h2>
+      <p style="margin-bottom: 1.75rem;">Restricted access for facility management staff only.</p>
+
+      <form id="admin-login-form">
+        <div class="form-group">
+          <label class="form-label" for="admin-email">Admin Email</label>
+          <input type="email" id="admin-email" class="form-control" placeholder="admin@fixit.com" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="admin-password">Password</label>
+          <input type="password" id="admin-password" class="form-control" placeholder="Enter admin password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 1.5rem;">
+          Log In to Admin Console
+        </button>
+      </form>
+
+      <div style="margin-top: 1.75rem; text-align: center; font-size: 0.85rem;">
+        <a href="index.html" style="color: #94a3b8;">← Back to FixIt Home</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    document.getElementById('admin-login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('admin-email').value;
+      const password = document.getElementById('admin-password').value;
+
+      const result = loginAdmin(email, password);
+      if (result.success) {
+        showToast('Welcome back, admin! Redirecting...', 'success');
+        setTimeout(() => {
+          window.location.href = 'admin-dashboard.html';
+        }, 700);
+      } else {
+        showToast(result.message, 'error');
+      }
+    });
+  </script>
+</body>
+</html>

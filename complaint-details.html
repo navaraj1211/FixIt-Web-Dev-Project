@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Report Details — FixIt</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/user.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        <span>FixIt</span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#" id="detail-back-link" class="nav-link active">Back</a></li>
+        <li><a href="#" class="btn btn-outline btn-sm btn-logout">Logout</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="complaint-detail-wrap">
+      <div class="detail-card">
+        <div class="section-header">
+          <h2 class="section-title" id="detail-title">Loading report...</h2>
+          <span class="complaint-id" id="detail-id"></span>
+        </div>
+
+        <div id="detail-tracker" class="status-tracker"></div>
+
+        <div class="detail-row">
+          <div class="detail-label">Category</div>
+          <div class="detail-value" id="detail-category"></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Location</div>
+          <div class="detail-value" id="detail-location"></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Priority</div>
+          <div class="detail-value" id="detail-priority"></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Description</div>
+          <div class="detail-value" id="detail-description"></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Additional Info</div>
+          <div class="detail-value" id="detail-additional"></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Submitted By</div>
+          <div class="detail-value" id="detail-submitted-by"></div>
+        </div>
+        <div class="detail-row">
+          <div class="detail-label">Date Submitted</div>
+          <div class="detail-value" id="detail-date"></div>
+        </div>
+        <div class="detail-row" id="detail-admin-status-row" style="display: none;">
+          <div class="detail-label">Update Status</div>
+          <div class="detail-value">
+            <select id="detail-status-select" class="status-select">
+              <option value="Pending">Pending</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Resolved">Resolved</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <div>FixIt — Complaint & Issue Reporting System</div>
+      <div>Logged in as: <strong class="current-user-name">User</strong></div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/complaints.js"></script>
+  <script src="js/user.js"></script>
+</body>
+</html>
