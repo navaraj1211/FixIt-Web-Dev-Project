@@ -58,6 +58,11 @@
 }
 
 /* --- 2. Base Reset & General Styles --- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -186,21 +191,34 @@ main {
   transition: color var(--transition-fast);
   padding: 0.4rem 0;
   position: relative;
+  cursor: pointer;
 }
 
-.nav-link:hover, .nav-link.active {
+.nav-link:hover {
   color: var(--primary);
 }
 
-.nav-link.active::after {
+.nav-link.active {
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.nav-link::after {
   content: '';
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
-  height: 2px;
+  height: 2.5px;
   background-color: var(--primary);
   border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link.active::after {
+  transform: scaleX(1);
 }
 
 .nav-actions {

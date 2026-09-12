@@ -66,15 +66,147 @@ function setupNavigation() {
     });
   }
 
-  // Highlight active link matching current filename
   const currentPath = window.location.pathname.split('/').pop() || 'index.html';
-  const navLinks = document.querySelectorAll('.nav-link');
-  navLinks.forEach(link => {
-    const href = link.getAttribute('href');
-    if (href === currentPath || (currentPath === '' && href === 'index.html')) {
-      link.classList.add('active');
+  const isLandingPage = currentPath === 'index.html' || currentPath === '';
+  const navLinks = Array.from(document.querySelectorAll('.nav-link'));
+
+  function setActiveLink(activeEl) {
+    navLinks.forEach(link => link.classList.remove('active'));
+    if (activeEl) {
+      activeEl.classList.add('active');
     }
-  });
+  }
+
+  if (isLandingPage) {
+    const homeLink = navLinks.find(l => {
+      const h = l.getAttribute('href');
+      return h === 'index.html' || h === '/' || h === '#top' || h === '#';
+    }) || navLinks[0];
+
+    // Handle clicks on nav links for smooth scroll and immediate active bar indicator update
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        const rawHref = link.getAttribute('href') || '';
+        const hashIdx = rawHref.indexOf('#');
+        const hash = hashIdx !== -1 ? rawHref.substring(hashIdx) : '';
+
+        if (hash) {
+          const targetEl = document.querySelector(hash);
+          if (targetEl) {
+            e.preventDefault();
+            setActiveLink(link);
+            const navHeight = document.querySelector('.navbar')?.offsetHeight || 72;
+            const targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight;
+            window.scrollTo({
+              top: targetPos,
+              behavior: 'smooth'
+            });
+            if (history.pushState) {
+              history.pushState(null, null, hash);
+            } else {
+              window.location.hash = hash;
+            }
+            if (navMenu) navMenu.classList.remove('active');
+          }
+        } else if (rawHref === 'index.html' || rawHref === '/' || rawHref === '') {
+          e.preventDefault();
+          setActiveLink(link);
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
+          if (history.pushState) {
+            history.pushState(null, null, window.location.pathname);
+          }
+          if (navMenu) navMenu.classList.remove('active');
+        }
+      });
+    });
+
+    // Scrollspy to dynamically update active navbar indicator bar as user scrolls
+    const sections = [
+      { id: 'categories', el: document.getElementById('categories') },
+      { id: 'features', el: document.getElementById('features') },
+      { id: 'how-it-works', el: document.getElementById('how-it-works') }
+    ];
+
+    let isScrollingFromClick = false;
+    let scrollTimeout;
+
+    function updateScrollspy() {
+      const scrollPos = window.scrollY;
+      const navHeight = document.querySelector('.navbar')?.offsetHeight || 72;
+      const offsetThreshold = navHeight + 120;
+
+      if (scrollPos < 180) {
+        setActiveLink(homeLink);
+        return;
+      }
+
+      // Check sections from bottom to top
+      for (const sec of sections) {
+        if (sec.el) {
+          const rect = sec.el.getBoundingClientRect();
+          const top = rect.top + window.pageYOffset;
+          if (scrollPos >= top - offsetThreshold) {
+            const matchingLink = navLinks.find(l => {
+              const h = l.getAttribute('href') || '';
+              return h === `#${sec.id}` || h === `index.html#${sec.id}`;
+            });
+            if (matchingLink) {
+              setActiveLink(matchingLink);
+              return;
+            }
+          }
+        }
+      }
+
+      setActiveLink(homeLink);
+    }
+
+    window.addEventListener('scroll', () => {
+      if (scrollTimeout) cancelAnimationFrame(scrollTimeout);
+      scrollTimeout = requestAnimationFrame(updateScrollspy);
+    }, { passive: true });
+
+    // Handle hash on initial page load
+    if (window.location.hash) {
+      const targetHash = window.location.hash;
+      const matched = navLinks.find(l => {
+        const h = l.getAttribute('href') || '';
+        return h === targetHash || h === `index.html${targetHash}`;
+      });
+      if (matched) {
+        setActiveLink(matched);
+        setTimeout(() => {
+          const targetEl = document.querySelector(targetHash);
+          if (targetEl) {
+            const navHeight = document.querySelector('.navbar')?.offsetHeight || 72;
+            const targetPos = targetEl.getBoundingClientRect().top + window.pageYOffset - navHeight;
+            window.scrollTo({ top: targetPos, behavior: 'smooth' });
+          }
+        }, 150);
+      } else {
+        updateScrollspy();
+      }
+    } else {
+      updateScrollspy();
+    }
+  } else {
+    // Other pages: match exact current filename
+    let matchedLink = null;
+    navLinks.forEach(link => {
+      const href = link.getAttribute('href') || '';
+      const linkFile = href.split('/').pop().split('#')[0];
+      if (linkFile && linkFile === currentPath) {
+        matchedLink = link;
+      }
+    });
+
+    if (matchedLink) {
+      setActiveLink(matchedLink);
+    }
+  }
 
   // Render dynamic auth button or user profile in navbar
   renderNavAuthSection();

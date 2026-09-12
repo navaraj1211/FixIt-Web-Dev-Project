@@ -55,16 +55,35 @@ function getUsers() {
     return DEFAULT_USERS;
   }
   try {
-    const users = JSON.parse(stored);
-    // Ensure admin always exists even after custom deletions
-    const hasAdmin = users.some(u => u.email.toLowerCase() === 'admin@fixit.com');
-    if (!hasAdmin) {
-      users.unshift(DEFAULT_USERS[0]);
+    let users = JSON.parse(stored);
+    if (!Array.isArray(users)) {
+      saveUsers(DEFAULT_USERS);
+      return DEFAULT_USERS;
+    }
+
+    let updated = false;
+    DEFAULT_USERS.forEach(defaultUser => {
+      const idx = users.findIndex(u => u && u.email && u.email.toLowerCase() === defaultUser.email.toLowerCase());
+      if (idx === -1) {
+        users.push(defaultUser);
+        updated = true;
+      } else {
+        // Ensure default demo credentials and roles are always restored if corrupted
+        if (users[idx].password !== defaultUser.password || users[idx].role !== defaultUser.role) {
+          users[idx].password = defaultUser.password;
+          users[idx].role = defaultUser.role;
+          updated = true;
+        }
+      }
+    });
+
+    if (updated) {
       saveUsers(users);
     }
     return users;
   } catch (e) {
     console.error('Error parsing users from LocalStorage:', e);
+    saveUsers(DEFAULT_USERS);
     return DEFAULT_USERS;
   }
 }
@@ -85,9 +104,15 @@ function getCurrentUser() {
   const stored = localStorage.getItem(STORAGE_CURRENT_USER_KEY);
   if (!stored) return null;
   try {
-    return JSON.parse(stored);
+    const user = JSON.parse(stored);
+    if (!user || typeof user !== 'object' || !user.email) {
+      localStorage.removeItem(STORAGE_CURRENT_USER_KEY);
+      return null;
+    }
+    return user;
   } catch (e) {
     console.error('Error parsing current user:', e);
+    localStorage.removeItem(STORAGE_CURRENT_USER_KEY);
     return null;
   }
 }
@@ -102,8 +127,8 @@ function setCurrentUser(user) {
   } else {
     // Strip sensitive password field from session representation
     const sessionUser = {
-      id: user.id,
-      name: user.name,
+      id: user.id || ('USR-' + Date.now()),
+      name: user.name || 'User',
       email: user.email,
       role: user.role || 'user'
     };
