@@ -13,74 +13,8 @@
 
 const STORAGE_COMPLAINTS_KEY = 'fixit_complaints';
 
-// Initial Demo Complaints
-const DEFAULT_COMPLAINTS = [
-  {
-    id: 'FIX-1001',
-    title: 'Wi-Fi not working on 3rd Floor',
-    category: 'Internet/Wi-Fi',
-    location: 'Central Library Study Hall C',
-    priority: 'High',
-    description: 'The router in Hall C frequently disconnects every 2-3 minutes. Multiple students are unable to access research materials.',
-    status: 'In Progress',
-    userId: 'sarah@example.com',
-    userName: 'Sarah Connor',
-    createdAt: '2026-08-27 10:15 AM',
-    updatedAt: '2026-08-28 02:30 PM'
-  },
-  {
-    id: 'FIX-1002',
-    title: 'Water tap leaking continuously',
-    category: 'Plumbing',
-    location: 'Hostel Block B, 2nd Floor Washroom',
-    priority: 'Medium',
-    description: 'The second faucet from the left is leaking clean water constantly. Needs a washer replacement.',
-    status: 'Resolved',
-    userId: 'sarah@example.com',
-    userName: 'Sarah Connor',
-    createdAt: '2026-08-25 08:45 AM',
-    updatedAt: '2026-08-26 11:00 AM'
-  },
-  {
-    id: 'FIX-1003',
-    title: 'Broken corridor lighting',
-    category: 'Electrical',
-    location: 'Academic Building A, North Corridor',
-    priority: 'High',
-    description: 'Two fluorescent tubes are flickering and one is completely burnt out, making the staircase very dark after 6 PM.',
-    status: 'Pending',
-    userId: 'david@example.com',
-    userName: 'David Miller',
-    createdAt: '2026-08-28 04:20 PM',
-    updatedAt: '2026-08-28 04:20 PM'
-  },
-  {
-    id: 'FIX-1004',
-    title: 'Classroom Projector HDMI issue',
-    category: 'Maintenance',
-    location: 'Room 304, Science Block',
-    priority: 'Medium',
-    description: 'The ceiling projector HDMI port produces green static on display. Faculty laptop cables were tested and work elsewhere.',
-    status: 'In Progress',
-    userId: 'sarah@example.com',
-    userName: 'Sarah Connor',
-    createdAt: '2026-08-28 01:10 PM',
-    updatedAt: '2026-08-29 09:00 AM'
-  },
-  {
-    id: 'FIX-1005',
-    title: 'AC unit blowing warm air',
-    category: 'Maintenance',
-    location: 'Computer Lab 2, Engineering Wing',
-    priority: 'Low',
-    description: 'Air conditioner unit #2 is making a rattling noise and blowing room-temperature air.',
-    status: 'Pending',
-    userId: 'david@example.com',
-    userName: 'David Miller',
-    createdAt: '2026-08-29 11:00 AM',
-    updatedAt: '2026-08-29 11:00 AM'
-  }
-];
+// Initial Complaints (Empty by default)
+const DEFAULT_COMPLAINTS = [];
 
 // --- 1. LocalStorage Accessors ---
 

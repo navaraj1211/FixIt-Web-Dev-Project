@@ -272,15 +272,13 @@ function renderAdminComplaintsTable(complaints, container) {
  * Handler to reset LocalStorage demo data for clean demonstrations and testing
  */
 function handleResetDemoData() {
-  if (confirm('Are you sure you want to reset all data to default demo accounts and complaints? Custom user entries will be restored to initial sample state.')) {
-    localStorage.removeItem(STORAGE_USERS_KEY);
+  if (confirm('Are you sure you want to clear all complaints?')) {
     localStorage.removeItem(STORAGE_COMPLAINTS_KEY);
 
-    // Re-seed defaults
-    getUsers();
+    // Re-seed defaults (empty)
     getComplaints();
 
-    Toast.show('Demo data successfully restored to defaults!', 'success');
+    Toast.show('All complaints cleared successfully!', 'success');
 
     // Re-initialize view
     setTimeout(() => {
