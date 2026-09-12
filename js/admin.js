@@ -289,3 +289,9 @@ function handleResetDemoData() {
     }, 400);
   }
 }
+
+// Auto-initialize Admin Dashboard when DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  initAdminPage();
+});
+
